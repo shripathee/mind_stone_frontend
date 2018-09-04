@@ -5,6 +5,8 @@ import Login from './Login/component';
 import SignUp from './SignUp/component';
 import { AUTH_TOKEN_LOCAL_STORAGE_KEY } from './constants';
 import { sendRequest } from './utilities/request';
+import history from './history';
+import { Redirect, Switch, Route } from 'react-router-dom';
 
 const LOGIN_URL = '/auth/token/login/';
 const SIGN_UP_URL = '/auth/users/create/';
@@ -13,8 +15,7 @@ const GET_CURRENT_USER_URL = '/auth/users/me/';
 class App extends Component {
   state = {
     isAuthenticated: false,
-    isLoaded: false,
-    isSignUp: false
+    isLoaded: false
   };
   componentDidMount() {
     this.authenticate();
@@ -22,14 +23,9 @@ class App extends Component {
   goToLogin() {
     this.setState({
       isAuthenticated: false,
-      isLoaded: true,
-      isSignUp: false
-    })
-  }
-  goToSignUp() {
-    this.setState({
-      isSignUp: true
+      isLoaded: true
     });
+    history.push('/log-in');
   }
   authenticate() {
     let token = localStorage.getItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
@@ -78,11 +74,19 @@ class App extends Component {
       if (this.state.isAuthenticated) {
         return (<Home currentUser={this.currentUser} logOut={this.logOut.bind(this)}/>);
       } else {
-        if (this.state.isSignUp) {
-          return (<SignUp signUp={this.signUp.bind(this)} goToLogin={this.goToLogin.bind(this)}/>);
-        } else {
-          return (<Login logIn={this.logIn.bind(this)} goToSignUp={this.goToSignUp.bind(this)}/>);
-        }
+        return (
+          <div>
+            <Redirect to="/log-in"/>
+            <Switch>
+              <Route path="/log-in" render={() => (
+                <Login logIn={this.logIn.bind(this)}/>
+              )}/>
+              <Route path="/sign-up" render={() => (
+                <SignUp signUp={this.signUp.bind(this)}/>
+              )}/>
+            </Switch>
+          </div>
+        )
       }
     } else {
       return (<div>Loading...</div>)

@@ -27,7 +27,8 @@ export default class Conversation extends Component {
       });
     });
   }
-  sendMessage() {
+  sendMessage(event) {
+    event.preventDefault();
     let message = this.state.newMessage;
     sendRequest(`/conversations/${this.conversationId}/`, 'PATCH', {
       message

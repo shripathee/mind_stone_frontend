@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export default class Login extends Component {
   state = {
@@ -39,7 +40,7 @@ export default class Login extends Component {
             </label>
             <input className="form-control" type="text" required value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
           </div>
-          <input className="btn btn-primary" type="submit" value="Submit" /> or <a onClick={this.props.goToSignUp}>Sign up</a> to create a new account.
+          <input className="btn btn-primary" type="submit" value="Submit" /> or <Link to="/sign-up">sign up</Link> to create a new account.
         </form>
       </div>
     );
