@@ -71,6 +71,7 @@ class App extends Component {
     this.setState({
       isAuthenticated: false
     });
+    localStorage.removeItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
   }
   render() {
     if (this.state.isLoaded) {

@@ -4,10 +4,12 @@ import NavigationPane from './NavigationPane/component';
 import CreateGroup from 'Home/CreateGroup/component';
 import Conversation from 'Home/Conversation/component';
 import { sendRequest } from 'utilities/request';
+import history from '../history';
 
 class Home extends Component {
   state = {
-    isLoaded: false
+    isLoaded: false,
+    canRedirect: false
   };
   componentDidMount() {
     let getUsers = sendRequest('/users');
@@ -15,10 +17,15 @@ class Home extends Component {
     Promise.all([getUsers, getGroups]).then(([users, groups]) => {
       this.users = users;
       this.groups = groups;
+      let firstUserId = users[0].id;
       this.setState({
         isLoaded: true
       });
+      history.push(`/users/${firstUserId}/conversation`);
     });
+  }
+  addNewGroup(group) {
+    this.groups.push(group);
   }
   render() {
     if (this.state.isLoaded) {
@@ -28,7 +35,7 @@ class Home extends Component {
           <div className="content">
             <Switch>
               <Route path="/groups/create" render={() => (
-                <CreateGroup availableUsers={this.users}/>
+                <CreateGroup availableUsers={this.users} addNewGroup={this.addNewGroup.bind(this)}/>
               )}/>
               <Route exact key={new Date().toISOString()} path="/users/:id/conversation" component={Conversation}/>
               <Route exact key={new Date().toISOString()} path="/groups/:id/conversation" component={Conversation}/>

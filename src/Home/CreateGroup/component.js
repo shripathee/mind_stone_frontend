@@ -25,29 +25,33 @@ export default class CreateGroup extends Component {
       name,
       users: selectedUsers.map((user) => user.id)
     }).then((group) => {
+      this.props.addNewGroup(group);
       history.push(`/groups/${group.id}/conversation`);
     })
   }
   render() {
     return (
       <form  onSubmit={this.handleSubmit.bind(this)}>
-        <label>
-          Name:
-          <input type="text" required value={this.state.name} onChange={this.handleNameChange.bind(this)}/>
-        </label>
-        <Select
-          isMulti
-          name="users"
-          options={this.props.availableUsers}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          getOptionLabel={(option) => {
-            return option.username;
-          }}
-          getOptionValue={(option) => option.id}
-          onChange={this.handleSelectedUsersChange.bind(this)}
-        />
-        <input type="submit" value="Submit" />
+        <div class="form-group">
+          <label>Name</label> 
+          <input className="form-control" type="text" required value={this.state.name} onChange={this.handleNameChange.bind(this)}/>
+        </div>
+        <div class="form-group">
+          <label>Users</label> 
+          <Select
+            isMulti
+            name="users"
+            options={this.props.availableUsers}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            getOptionLabel={(option) => {
+              return option.username;
+            }}
+            getOptionValue={(option) => option.id}
+            onChange={this.handleSelectedUsersChange.bind(this)}
+          />
+        </div>
+        <input className="btn btn-primary" type="submit" value="Submit" />
       </form>
     );
   }

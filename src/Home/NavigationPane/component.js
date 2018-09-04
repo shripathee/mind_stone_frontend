@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import NavigationList from 'generic-components/NavigationList';
+import './styles.css';
 
 class NavigationPane extends Component {
   renderUserList() {
@@ -9,12 +10,15 @@ class NavigationPane extends Component {
   render() {
     return (
       <div className="nav">
-        <button onClick={this.props.logOut}>Log out</button>
-        <h4>Users</h4>
+        <header class="lead nav_header">Users</header>
         <NavigationList entity='users' items={this.props.users} labelProperty='username'/>
-        <h4>Groups</h4>
+        <header class="lead nav_header">
+          Groups <Link className="small float-right" to="/groups/create/">+</Link>
+        </header>
         <NavigationList entity='groups' items={this.props.groups} labelProperty='name'/>
-        <Link to="/groups/create/">Create Group</Link>
+        <footer class="nav_log-out">
+          <button class="btn btn-dark" onClick={this.props.logOut}>Log out</button>
+        </footer>
       </div>
     );
   }

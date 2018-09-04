@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default class NavigationList extends Component {
   constructor(props) {
@@ -10,14 +10,14 @@ export default class NavigationList extends Component {
   }
   render() {
     const listItems = this.items.map((item) =>
-      <Link to={`/${this.entity}/${item.id}/conversation`}>
-        <li key={item.id}>{item[this.labelProperty]}</li>
-      </Link>
+      <NavLink key={item.id} className="list-group-item text-right" to={`/${this.entity}/${item.id}/conversation`}>
+        {item[this.labelProperty]}
+      </NavLink>
     );
     return (
-      <ul>
+      <div className="list-group">
         {listItems}
-      </ul>
+      </div>
     );
   }
 }

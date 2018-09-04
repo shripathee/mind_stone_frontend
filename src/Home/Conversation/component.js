@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { sendRequest } from 'utilities/request';
+import './styles.css';
 
 export default class Conversation extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ export default class Conversation extends Component {
     sendRequest(`/conversations/?${params}`).then((conversation) => {
       this.conversationId = conversation.id;
       let { threads } = conversation;
-      this.threads = threads
+      this.threads = threads;
       this.setState({
         isConversationLoaded: true
       });
@@ -42,8 +43,9 @@ export default class Conversation extends Component {
   renderThreads(threads) {
     return threads.map((thread) => {
       return (
-        <div className="thread">
-          {thread.messages[0]}
+        <div key={thread.id} className="alert alert-primary">
+          {thread.messages[0].text}
+          <small class="font-italic float-right">- {thread.messages[0].author}</small>
         </div>
       )
     })
@@ -53,21 +55,28 @@ export default class Conversation extends Component {
       <div>Loading...</div>
     )
   }
+  renderEmptyState() {
+    return (
+      <div className="u-hv-centered display-1">Say hi!</div>
+    )
+  }
   render() {
     return (
      <div>
-      Conversation
-      {(this.state.isConversationLoaded) && (
+      {this.state.isConversationLoaded && (
         this.renderThreads(this.threads)
       )}
-      {(!this.state.isConversationLoaded) && (
+      {!this.state.isConversationLoaded && (
         this.renderLoading()
       )}
-      <footer>
-        Add message
-        <input type="text" value={this.state.newMessage} onChange={this.handleNewMessageChange.bind(this)}/>
+      {this.threads && !this.threads.length && (
+        this.renderEmptyState()
+      )}
+      <footer class="message-editor">
+        <form onSubmit={this.sendMessage.bind(this)}>
+          <input placeholder="Add message" className="form-control" type="text" value={this.state.newMessage} onChange={this.handleNewMessageChange.bind(this)}/>
+        </form>
       </footer>
-      <button onClick={this.sendMessage.bind(this)}>Send</button>
      </div>
     );
   }

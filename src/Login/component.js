@@ -22,19 +22,25 @@ export default class Login extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="container form-container">
+        <header className="display-4 form-header">
+          Sign in
+        </header>
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <label>
-            Username:
-            <input type="text" required value={this.state.username} onChange={this.handleUsernameChange.bind(this)}/>
-          </label>
-          <label>
-            Password:
-            <input type="text" required value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
-          </label>
-          <input type="submit" value="Submit" />
+          <div class="form-group">
+            <label>
+              Username
+            </label>
+            <input className="form-control" type="text" required value={this.state.username} onChange={this.handleUsernameChange.bind(this)}/>
+          </div>
+          <div class="form-group">
+            <label>
+              Password
+            </label>
+            <input className="form-control" type="text" required value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
+          </div>
+          <input className="btn btn-primary" type="submit" value="Submit" /> or <a onClick={this.props.goToSignUp}>Sign up</a> to create a new account.
         </form>
-        <button onClick={this.props.goToSignUp}>Sign Up</button>
       </div>
     );
   }
