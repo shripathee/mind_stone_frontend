@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import NavigationPane from './NavigationPane/component';
 import CreateGroup from 'Home/CreateGroup/component';
+import EditGroup from 'Home/EditGroup/component';
 import Conversation from 'Home/Conversation/component';
 import { sendRequest } from 'utilities/request';
 import history from '../history';
@@ -36,6 +37,9 @@ class Home extends Component {
             <Switch>
               <Route path="/groups/create" render={() => (
                 <CreateGroup availableUsers={this.users} addNewGroup={this.addNewGroup.bind(this)}/>
+              )}/>
+              <Route path="/groups/:id/edit" render={(props) => (
+                <EditGroup {...props} availableUsers={this.users} groups={this.groups}/>
               )}/>
               <Route exact key={new Date().toISOString()} path="/users/:id/conversation" component={Conversation}/>
               <Route exact key={new Date().toISOString()} path="/groups/:id/conversation" component={Conversation}/>

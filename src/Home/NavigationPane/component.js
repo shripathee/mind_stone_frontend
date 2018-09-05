@@ -4,9 +4,6 @@ import NavigationList from 'generic-components/NavigationList';
 import './styles.css';
 
 class NavigationPane extends Component {
-  renderUserList() {
-
-  }
   render() {
     return (
       <div className="nav">
@@ -17,6 +14,7 @@ class NavigationPane extends Component {
         </header>
         <NavigationList entity='groups' items={this.props.groups} labelProperty='name'/>
         <footer class="nav_log-out">
+          <div class="text-center">@{this.props.currentUser.username}</div>
           <button class="btn btn-dark" onClick={this.props.logOut}>Log out</button>
         </footer>
       </div>

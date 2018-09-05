@@ -6,6 +6,9 @@ export default class Login extends Component {
     username: '',
     password: ''
   };
+  componentDidMount() {
+    localStorage.clear();
+  }
   handleUsernameChange(event) {
     this.setState({
       username: event.target.value
@@ -38,7 +41,7 @@ export default class Login extends Component {
             <label>
               Password
             </label>
-            <input className="form-control" type="text" required value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
+            <input className="form-control" type="password" required value={this.state.password} onChange={this.handlePasswordChange.bind(this)}/>
           </div>
           <input className="btn btn-primary" type="submit" value="Submit" /> or <Link to="/sign-up">sign up</Link> to create a new account.
         </form>

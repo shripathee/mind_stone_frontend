@@ -57,17 +57,15 @@ class App extends Component {
       username,
       password
     }).then(({ auth_token }) => {
-      this.setState({
-        isAuthenticated: true
-      });
       localStorage.setItem(AUTH_TOKEN_LOCAL_STORAGE_KEY, auth_token);
+      this.authenticate();
     });
   }
   logOut() {
     this.setState({
       isAuthenticated: false
     });
-    localStorage.removeItem(AUTH_TOKEN_LOCAL_STORAGE_KEY);
+    localStorage.clear();
   }
   render() {
     if (this.state.isLoaded) {
