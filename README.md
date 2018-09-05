@@ -13,3 +13,5 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The app uses local storage to store the auth token, so different browsers or incognito mode has to be used to log in as different users.
